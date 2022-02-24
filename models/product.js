@@ -65,6 +65,11 @@ const productSchema = new Schema({
         type: Boolean,
         required: true,
         default: false
+    },
+    artisan: {
+        ref: "Artisan",
+        type: Schema.Types.ObjectId,
+        required: true
     }
 },{
     timestamps: true,

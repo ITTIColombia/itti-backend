@@ -7,7 +7,13 @@ const orderItemSchema = new Schema({
         type: Number,
         required: Number,
         min: 0
+    },
+    product: {
+        ref: "Product",
+        required: true,
+        type: Schema.Types.ObjectId
     }
+
 })
 
 
@@ -28,6 +34,16 @@ const orderSchema = new Schema({
     },
     orderItems: {
         type: [orderItemSchema],
+        required: true
+    },
+    artisan: {
+        ref: "Artisan",
+        type: Schema.Types.ObjectId,
+        required: true
+    },
+    purchase: {
+        ref: "Purchase",
+        type: Schema.Types.ObjectId,
         required: true
     }
 

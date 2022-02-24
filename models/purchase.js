@@ -47,6 +47,11 @@ const purchaseSchema = new Schema({
     media: {
         type: [String],
         required: true,
+    },
+    client: {
+        type: Schema.Types.ObjectId,
+        ref: "Client",
+        required: true
     }
 },{
     timestamps: true,

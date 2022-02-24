@@ -6,6 +6,11 @@ const cardItemSchema = new Schema({
         type: Number,
         required: true,
         min: 0
+    },
+    product: {
+        ref: "Product",
+        required: true,
+        type: Schema.Types.ObjectId
     }
 })
 
