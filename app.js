@@ -10,6 +10,15 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+const dburl = process.env.MONGODB_URL || "mongodb://localhost:27017/"
+
+console.log("URL mongo DB", dburl)
+mongoose.connect(dburl, {
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useUnifiedTopology: true
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
