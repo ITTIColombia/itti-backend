@@ -24,8 +24,8 @@ const clientSchema = new Schema({
     cellphoneNumber: {
         type: String,
         required: true,
-        minlength: 13,
-        maxLength: 13
+        minlength: 11,
+        maxLength: 12
     },
     address: {
         type: String,

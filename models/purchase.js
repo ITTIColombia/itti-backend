@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const enums = require('enums');
+const enums = require('./enums');
 
 
 const purchaseSchema = new Schema({

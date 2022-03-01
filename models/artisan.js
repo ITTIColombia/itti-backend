@@ -11,8 +11,8 @@ const artisanSchema = new Schema({
     cellphoneNumber: {
         type: String,
         required: true,
-        minlength: 13,
-        maxLength: 13
+        minlength: 11,
+        maxLength: 12
     },
     address: {
         type: String,
@@ -70,7 +70,7 @@ const artisanSchema = new Schema({
     url: {
         type: String,
         required: true,
-        minlength: 10,
+        minlength: 4,
         maxLength: 250
     },
     logo:{
