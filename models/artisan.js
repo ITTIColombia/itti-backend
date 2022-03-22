@@ -76,6 +76,14 @@ const artisanSchema = new Schema({
     logo:{
         type: String
     },
+    profilePhoto:{
+        type: String,
+        minlength: 4
+    },
+    media: {
+        type: [String],
+        required: true,
+    }
 }, {
     collection: 'Artisan',
     timestamps: true
