@@ -1,8 +1,8 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const mongoose = require("mongoose")
 
 let artisanRouter = require("./routes/artisan");
@@ -11,7 +11,10 @@ let orderRouter = require("./routes/order");
 let productRouter = require("./routes/product");
 let purchaseRouter = require("./routes/purchase");
 
-var app = express();
+
+const restrictedRoute = require("./routes/authorization");
+
+const app = express();
 
 const db_url = process.env.MONGODB_URL || "mongodb://localhost:27017/ITTI"
 
@@ -28,10 +31,16 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use("/artisans", artisanRouter);
-app.use("/clients", clientRouter);
-app.use("/orders", orderRouter);
-app.use("/products", productRouter);
-app.use("/purchases", purchaseRouter);
+app.use("/clients",
+    restrictedRoute,
+    clientRouter);
+app.use("/orders",
+    restrictedRoute,
+    orderRouter);
+app.use("/products",productRouter);
+app.use("/purchases",
+    restrictedRoute,
+    purchaseRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

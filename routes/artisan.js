@@ -36,7 +36,13 @@ const Product = require("../models/product");
  * @namespace orderModel
  */
 const Order = require("../models/order");
-const Console = require("console");
+
+/**
+ * Middleware for protected endpoints
+ * @const
+ * @namespace restrictedRoute
+ */
+const restrictedRoute = require("./authorization");
 
 /**
  * Route serving GET for all artisans
@@ -65,7 +71,9 @@ router.get('/:id', function (req, res, next) {
 /**
  * Route serving POST to create a new artisan
  */
-router.post("/", (req, res) => {
+router.post("/",
+    restrictedRoute,
+    (req, res) => {
     Artisan.create(req.body).then((artisan) => {
         res.status(201).send(artisan);
     }).catch(err => {
@@ -78,7 +86,9 @@ router.post("/", (req, res) => {
 /**
  * Route serving PATCH to modify existing artisan
  */
-router.patch("/:id", function (req, res, next) {
+router.patch("/:id",
+    restrictedRoute,
+    function (req, res, next) {
     Artisan.findOneAndUpdate({"_id": req.params.id}, {$set: req.body}, {runValidators: true}).then((result) => {
         res.sendStatus(200);
     }).catch((err) => res.status(400).send(err));
@@ -87,7 +97,9 @@ router.patch("/:id", function (req, res, next) {
 /**
  * Route serving PUT modify completely existing artisan
  */
-router.put("/:id", function (req, res, next) {
+router.put("/:id",
+    restrictedRoute,
+    function (req, res, next) {
     Artisan.replaceOne({"_id": req.params.id}, req.body, {runValidators: true}).then((result) => {
         if (result.nModified === 0)
             return res.sendStatus(404);
