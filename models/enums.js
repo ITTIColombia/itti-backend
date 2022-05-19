@@ -1,12 +1,12 @@
 
-module.exports.productType = ["indigenous", "popularTraditional", "contemporary"];
+module.exports.productType = ["Indigenous", "PopularTraditional", "Contemporary"];
 
-module.exports.productCategory = ["necklace", "earrings", "bracelets", "scarfs", "bags", "hats", "homeDecor"];
+module.exports.productCategory = ["Necklace", "Earrings", "Bracelets", "Scarfs", "Bags", "Hats", "HomeDecor"];
 
-module.exports.productLabour = ["jewelerySilversmith", "potteryCeramicGlass", "knittingEmbroidery", "basketryHats", "woodWork", "leather"];
+module.exports.productLabour = ["JewelerySilversmith", "PotteryCeramicGlass", "KnittingEmbroidery", "BasketryHats", "WoodWork", "Leather"];
 
-module.exports.orderStatus = ["delivered", "cancelled", "pending", "verified", "sent"];
+module.exports.orderStatus = ["Delivered", "Cancelled", "Pending", "Verified", "Sent"];
 
-module.exports.purchaseStatus = ["paid", 'pending', 'denied', "returned"];
+module.exports.purchaseStatus = ["Paid", 'Pending', 'Denied', "Returned"];
 
 

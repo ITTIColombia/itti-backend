@@ -59,7 +59,7 @@ router.get('/:id', function (req, res, next) {
  * Route serving POST to create a new product
  */
 router.post("/", (req, res) => {
-    Artisan.findById(req.params.id).then(artisan => {
+    Artisan.findById(req.body.artisan).then(artisan => {
         if(!artisan) return res.status(404).send("Artisan not found.");
         Product.create(req.body).then(product=>
             res.status(201).send(product)

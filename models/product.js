@@ -26,7 +26,7 @@ const productSchema = new Schema({
         min: 0
     },
     media: {
-        type: [Number],
+        type: [String],
         required: true,
     },
     productType: {
