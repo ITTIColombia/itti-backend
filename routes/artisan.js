@@ -75,11 +75,6 @@ router.post("/", (req, res) => {
 });
 
 
-router.post("/hello", (req, res) => {
-    console.log("HELLO")
-    return res.sendStatus(205)
-});
-
 /**
  * Route serving PATCH to modify existing artisan
  */
