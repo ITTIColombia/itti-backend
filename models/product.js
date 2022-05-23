@@ -9,12 +9,23 @@ const productSchema = new Schema({
         minlength: 4,
         maxLength: 50
     },
+    artisan: {
+        ref: "Artisan",
+        type: Schema.Types.ObjectId,
+        required: true
+    },
     price: {
         type: Number,
         required: true,
         min: 1
     },
-    description: {
+    descriptionES: {
+        type: String,
+        required: true,
+        minlength: 10,
+        maxlength: 250,
+    },
+    descriptionEN: {
         type: String,
         required: true,
         minlength: 10,
@@ -24,10 +35,6 @@ const productSchema = new Schema({
         type: Number,
         required: true,
         min: 0
-    },
-    media: {
-        type: [String],
-        required: true,
     },
     productType: {
         type: String,
@@ -44,7 +51,25 @@ const productSchema = new Schema({
         required: true,
         min: 0
     },
-    technique: {
+    techniqueES: {
+        type: String,
+        required: true,
+        minlength: 10,
+        maxlength: 250
+    },
+    techniqueEN: {
+        type: String,
+        required: true,
+        minlength: 10,
+        maxlength: 250
+    },
+    materialsES: {
+        type: String,
+        required: true,
+        minlength: 10,
+        maxlength: 250
+    },
+    materialsEN: {
         type: String,
         required: true,
         minlength: 10,
@@ -55,7 +80,13 @@ const productSchema = new Schema({
         required: true,
         enum: enums.productCategory
     },
-    cares: {
+    caresES: {
+        type: String,
+        required: true,
+        minlength: 10,
+        maxlength: 250
+    },
+    caresEN: {
         type: String,
         required: true,
         minlength: 10,
@@ -66,10 +97,11 @@ const productSchema = new Schema({
         required: true,
         default: false
     },
-    artisan: {
-        ref: "Artisan",
-        type: Schema.Types.ObjectId,
-        required: true
+    media: {
+        photos: {
+            type: [String],
+            required: true
+        }
     }
 },{
     timestamps: true,

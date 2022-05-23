@@ -33,10 +33,9 @@ const artisanSchema = new Schema({
         maxLength: 50
     },
     department: {
-        type: String,
-        required: true,
-        minlength: 4,
-        maxLength: 50
+        ref: "Department",
+        type: Schema.Types.ObjectId,
+        required: true
     },
     country: {
         type: String,
@@ -50,13 +49,25 @@ const artisanSchema = new Schema({
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'],
         unique: true
     },
-    shortDescription: {
+    shortDescriptionES: {
         type: String,
         required: true,
         minlength: 10,
         maxLength: 250
     },
-    detailedDescription: {
+    detailedDescriptionES: {
+        type: String,
+        required: true,
+        minlength: 100,
+        maxLength: 500
+    },
+    shortDescriptionEN: {
+        type: String,
+        required: true,
+        minlength: 10,
+        maxLength: 250
+    },
+    detailedDescriptionEN: {
         type: String,
         required: true,
         minlength: 100,
@@ -73,16 +84,23 @@ const artisanSchema = new Schema({
         minlength: 4,
         maxLength: 250
     },
-    logo:{
-        type: String
-    },
-    profilePhoto:{
-        type: String,
-        minlength: 4
-    },
     media: {
-        type: [String],
-        required: true,
+        video: {
+            type: String,
+            required:true,
+        },
+        technique: {
+            type: [String],
+            required: true,
+        },
+        logo: {
+            type: String,
+            required:true,
+        },
+        profile: {
+            type: String,
+            required:true,
+        }
     }
 }, {
     collection: 'Artisan',
