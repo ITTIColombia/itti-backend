@@ -11,6 +11,7 @@ let clientRouter = require("./routes/client");
 let orderRouter = require("./routes/order");
 let productRouter = require("./routes/product");
 let purchaseRouter = require("./routes/purchase");
+let departmentRouter = require("./routes/department");
 
 
 const restrictedRoute = require("./routes/authorization");
@@ -43,6 +44,7 @@ app.use("/products",productRouter);
 app.use("/purchases",
     restrictedRoute,
     purchaseRouter);
+app.use("/departments", departmentRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
