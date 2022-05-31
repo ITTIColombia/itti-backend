@@ -59,6 +59,19 @@ router.get('/', function (req, res, next){
     });
 });
 
+
+/**
+ * Route serving GET for sample artisans
+ */
+router.get("/sample", (req, res, next)=>{
+    const qty = parseInt(req.query.qty) || 2;
+    Artisan.aggregate([{ $sample: {size:qty}}]).then(artisans=>{
+        return res.status(200).send(artisans);
+    }).catch(err=>{
+        return res.status(err.code).send(err)
+    });
+});
+
 /**
  * Route serving GET for a specific artisan
  */
@@ -126,11 +139,7 @@ router.get("/:id/products", (req, res, next)=>{
 router.get("/:id/products/sample", (req, res, next)=>{
     const qty = parseInt(req.query.qty) || 2;
     Product.aggregate([{ $match: {$expr: { $eq: ["$artisan",{$toObjectId: req.params.id} ]} }}, { $sample: {size:qty}}]).then(products=>{
-        // if (artisans === undefined || artisans.length === 0) {
-        //     return res.status(204).send(artisans)
-        // }
-        // res.send(artisans)
-        return res.send(products);
+        return res.status(200).send(products);
     }).catch(err=>{
         return res.status(err.code).send(err)
     });
