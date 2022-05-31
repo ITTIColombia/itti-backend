@@ -4,12 +4,14 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require("mongoose")
+const cors = require('cors')
 
 let artisanRouter = require("./routes/artisan");
 let clientRouter = require("./routes/client");
 let orderRouter = require("./routes/order");
 let productRouter = require("./routes/product");
 let purchaseRouter = require("./routes/purchase");
+let departmentRouter = require("./routes/department");
 
 
 const restrictedRoute = require("./routes/authorization");
@@ -24,6 +26,7 @@ mongoose.connect(db_url);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(cors())
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -41,6 +44,7 @@ app.use("/products",productRouter);
 app.use("/purchases",
     restrictedRoute,
     purchaseRouter);
+app.use("/departments", departmentRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
