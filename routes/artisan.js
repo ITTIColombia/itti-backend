@@ -43,6 +43,7 @@ const Order = require("../models/order");
  * @namespace restrictedRoute
  */
 const restrictedRoute = require("./authorization");
+const {number} = require("joi");
 
 /**
  * Route serving GET for all artisans
@@ -55,6 +56,19 @@ router.get('/', function (req, res, next){
         res.send(artisans)
     }).catch(err => {
         res.status(400).send(err)
+    });
+});
+
+
+/**
+ * Route serving GET for sample artisans
+ */
+router.get("/sample", (req, res, next)=>{
+    const qty = parseInt(req.query.qty) || 2;
+    Artisan.aggregate([{ $sample: {size:qty}}]).then(artisans=>{
+        return res.status(200).send(artisans);
+    }).catch(err=>{
+        return res.status(err.code).send(err)
     });
 });
 
@@ -112,6 +126,7 @@ router.put("/:id",
  * Route serving GET for all products of specific artisan
  */
 router.get("/:id/products", (req, res, next)=>{
+    restrictedRoute,
     Product.find({artisan: req.params.id}).then(products=>{
         res.send(products);
     }).catch(err=>res.status(400).send(err));
@@ -119,9 +134,23 @@ router.get("/:id/products", (req, res, next)=>{
 
 
 /**
+ * Route serving GET for sample products of specific artisan
+ */
+router.get("/:id/products/sample", (req, res, next)=>{
+    const qty = parseInt(req.query.qty) || 2;
+    Product.aggregate([{ $match: {$expr: { $eq: ["$artisan",{$toObjectId: req.params.id} ]} }}, { $sample: {size:qty}}]).then(products=>{
+        return res.status(200).send(products);
+    }).catch(err=>{
+        return res.status(err.code).send(err)
+    });
+});
+
+
+/**
  * Route serving GET for all orders of specific artisan
  */
 router.get("/:id/orders", (req, res, next)=>{
+    restrictedRoute,
     Order.find({artisan: req.params.id}).then(orders=>{
         res.send(orders);
     }).catch(err=>res.status(400).send(err));
