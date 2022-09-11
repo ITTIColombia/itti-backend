@@ -59,7 +59,7 @@ router.get('/:id', function (req, res, next) {
  * Route serving POST to create a new department
  */
 router.post("/",
-    restrictedRoute,
+    // restrictedRoute, // FOR TRIAL PURPOSES ONLY
     (req, res) => {
         Department.create(req.body).then((department) => {
             res.status(201).send(department);
@@ -74,7 +74,7 @@ router.post("/",
  * Route serving PATCH to modify existing department
  */
 router.patch("/:id",
-    restrictedRoute,
+    // restrictedRoute, // FOR TRIAL PURPOSES ONLY
     function (req, res, next) {
         Department.findOneAndUpdate({"_id": req.params.id}, {$set: req.body}, {runValidators: true}).then((result) => {
             res.sendStatus(200);
@@ -85,7 +85,7 @@ router.patch("/:id",
  * Route serving PUT modify completely existing department
  */
 router.put("/:id",
-    restrictedRoute,
+    // restrictedRoute, // FOR TRIAL PURPOSES ONLY
     function (req, res, next) {
         Department.replaceOne({"_id": req.params.id}, req.body, {runValidators: true}).then((result) => {
             if (result.nModified === 0)

@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -15,7 +17,6 @@ let departmentRouter = require("./routes/department");
 
 
 const restrictedRoute = require("./routes/authorization");
-
 const app = express();
 
 const db_url = process.env.MONGODB_URL || "mongodb://localhost:27017/ITTI"
@@ -35,14 +36,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use("/artisans", artisanRouter);
 app.use("/clients",
-    restrictedRoute,
     clientRouter);
 app.use("/orders",
-    restrictedRoute,
+    // restrictedRoute, // FOR TRIAL PURPOSES ONLY
     orderRouter);
 app.use("/products",productRouter);
 app.use("/purchases",
-    restrictedRoute,
+    // restrictedRoute, // FOR TRIAL PURPOSES ONLY
     purchaseRouter);
 app.use("/departments", departmentRouter);
 
