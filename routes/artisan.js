@@ -101,7 +101,7 @@ router.post("/",
  * Route serving PATCH to modify existing artisan
  */
 router.patch("/:id",
-    restrictedRoute,
+    restrictedRoute, 
     function (req, res, next) {
     Artisan.findOneAndUpdate({"_id": req.params.id}, {$set: req.body}, {runValidators: true}).then((result) => {
         res.sendStatus(200);
@@ -112,7 +112,7 @@ router.patch("/:id",
  * Route serving PUT modify completely existing artisan
  */
 router.put("/:id",
-    restrictedRoute,
+    restrictedRoute, 
     function (req, res, next) {
     Artisan.replaceOne({"_id": req.params.id}, req.body, {runValidators: true}).then((result) => {
         if (result.nModified === 0)
@@ -126,7 +126,7 @@ router.put("/:id",
  * Route serving GET for all products of specific artisan
  */
 router.get("/:id/products", (req, res, next)=>{
-    restrictedRoute,
+    restrictedRoute, 
     Product.find({artisan: req.params.id}).then(products=>{
         res.send(products);
     }).catch(err=>res.status(400).send(err));
