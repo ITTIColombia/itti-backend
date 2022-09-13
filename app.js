@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -30,7 +28,7 @@ app.set('view engine', 'jade');
 app.use(cors())
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -38,28 +36,28 @@ app.use("/artisans", artisanRouter);
 app.use("/clients",
     clientRouter);
 app.use("/orders",
-    // restrictedRoute, // FOR TRIAL PURPOSES ONLY
+    restrictedRoute,
     orderRouter);
-app.use("/products",productRouter);
+app.use("/products", productRouter);
 app.use("/purchases",
-    // restrictedRoute, // FOR TRIAL PURPOSES ONLY
+    restrictedRoute,
     purchaseRouter);
 app.use("/departments", departmentRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+app.use(function (req, res, next) {
+    next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use(function (err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
 
 module.exports = app;
