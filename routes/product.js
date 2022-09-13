@@ -67,7 +67,7 @@ router.get('/:id', function (req, res, next) {
  * Route serving POST to create a new product
  */
 router.post("/",
-    // restrictedRoute, // FOR TRIAL PURPOSES ONLY
+    restrictedRoute, 
     (req, res) => {
     Artisan.findById(req.body.artisan).then(artisan => {
         if(!artisan) return res.status(404).send("Artisan not found.");
@@ -81,7 +81,7 @@ router.post("/",
  * Route serving PATCH to modify existing product
  */
 router.patch("/:id",
-    // restrictedRoute, // FOR TRIAL PURPOSES ONLY
+    restrictedRoute, 
     function (req, res, next) {
     Product.findOneAndUpdate({"_id": req.params.id}, {$set: req.body}, {runValidators: true}).then((result) => {
         res.sendStatus(200);
@@ -93,7 +93,7 @@ router.patch("/:id",
  * Route serving PUT modify completely existing product
  */
 router.put("/:id",
-    // restrictedRoute, // FOR TRIAL PURPOSES ONLY
+    restrictedRoute, 
     function (req, res, next) {
     Product.replaceOne({"_id": req.params.id}, req.body, {runValidators: true}).then((result) => {
         if (result.nModified === 0)

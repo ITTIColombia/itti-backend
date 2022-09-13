@@ -86,7 +86,7 @@ router.get('/:id', function (req, res, next) {
  * Route serving POST to create a new artisan
  */
 router.post("/",
-    // restrictedRoute, // FOR TRIAL PURPOSES ONLY
+    restrictedRoute,
     (req, res) => {
     Artisan.create(req.body).then((artisan) => {
         res.status(201).send(artisan);
@@ -101,7 +101,7 @@ router.post("/",
  * Route serving PATCH to modify existing artisan
  */
 router.patch("/:id",
-    // restrictedRoute, // FOR TRIAL PURPOSES ONLY
+    restrictedRoute, 
     function (req, res, next) {
     Artisan.findOneAndUpdate({"_id": req.params.id}, {$set: req.body}, {runValidators: true}).then((result) => {
         res.sendStatus(200);
@@ -112,7 +112,7 @@ router.patch("/:id",
  * Route serving PUT modify completely existing artisan
  */
 router.put("/:id",
-    // restrictedRoute, // FOR TRIAL PURPOSES ONLY
+    restrictedRoute, 
     function (req, res, next) {
     Artisan.replaceOne({"_id": req.params.id}, req.body, {runValidators: true}).then((result) => {
         if (result.nModified === 0)
@@ -126,7 +126,7 @@ router.put("/:id",
  * Route serving GET for all products of specific artisan
  */
 router.get("/:id/products", (req, res, next)=>{
-    // restrictedRoute, // FOR TRIAL PURPOSES ONLY
+    restrictedRoute, 
     Product.find({artisan: req.params.id}).then(products=>{
         res.send(products);
     }).catch(err=>res.status(400).send(err));
