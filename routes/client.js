@@ -31,24 +31,30 @@ const Client = require("../models/client");
 const Purchase = require("../models/purchase");
 
 /**
+ * AWS Cognito module to authenticate users
+ * @const
+ * @namespace cognitoExpress
+ */
+const { validateAuth } = require("../auth");
+
+
+/**
  * Route serving GET for all clients
  */
-router.get('/', function (req, res, next){
+router.get('/', [validateAuth], function (req, res, next){
     Client.find({}).then(clients => {
         if (clients === undefined || clients.length === 0) {
             return res.status(204).send(clients)
         }
         res.send(clients)
-    }).catch(err => {
-        res.status(400).send(err)
-    });
+    }).catch(err => res.status(400).send(err));
 });
 
 
 /**
  * Route serving GET for a specific client
  */
-router.get('/:id', function (req, res, next) {
+router.get('/:id', [validateAuth], function (req, res, next) {
     Client.findById(req.params.id).then(client => {
         if (!client) return res.sendStatus(404);
         res.send(client);
@@ -56,9 +62,21 @@ router.get('/:id', function (req, res, next) {
 });
 
 /**
+ * Route serving GET for a specific client by email
+ */
+router.get('/email/:email', [validateAuth], function (req, res, next) {
+    Client.find({email: req.params.email}).then(clients => {
+        if (clients === undefined || clients.length === 0) {
+            return res.sendStatus(404);
+        }
+        res.send(clients[0]);
+    }).catch(err => res.status(400).send(err));
+});
+
+/**
  * Route serving POST to create a new client
  */
-router.post("/", (req, res) => {
+router.post("/", [validateAuth], (req, res) => {
     Client.create(req.body).then((client) => {
         res.status(201).send(client);
     }).catch(err => res.status(400).send(err));
@@ -67,8 +85,17 @@ router.post("/", (req, res) => {
 /**
  * Route serving PATCH to modify existing client
  */
-router.patch("/:id", function (req, res, next) {
+router.patch("/:id", [validateAuth], function (req, res, next) {
     Client.findOneAndUpdate({"_id": req.params.id}, {$set: req.body}, {runValidators: true}).then((result) => {
+        res.sendStatus(200);
+    }).catch((err) => res.status(400).send(err));
+});
+
+/**
+ * Route serving PATCH to modify existing client by its email
+ */
+ router.patch("/email/:email", [validateAuth], function (req, res, next) {
+    Client.findOneAndUpdate({"email": req.params.email}, {$set: req.body}, {runValidators: true}).then((result) => {
         res.sendStatus(200);
     }).catch((err) => res.status(400).send(err));
 });
@@ -76,9 +103,20 @@ router.patch("/:id", function (req, res, next) {
 /**
  * Route serving PUT modify completely existing client
  */
-router.put("/:id", function (req, res, next) {
+router.put("/:id", [validateAuth], function (req, res, next) {
     Client.replaceOne({"_id": req.params.id}, req.body, {runValidators: true}).then((result) => {
         if (result.nModified === 0)
+            return res.sendStatus(404);
+        res.sendStatus(200);
+    }).catch((err) => res.status(400).send(err));
+});
+
+/**
+ * Route serving DELETE to delete a client
+ */
+router.delete("/email/:email", [validateAuth], function (req, res, next) {
+    Client.deleteOne({email: req.params.email}).then((result) => {
+        if (result.deletedCount === 0)
             return res.sendStatus(404);
         res.sendStatus(200);
     }).catch((err) => res.status(400).send(err));
